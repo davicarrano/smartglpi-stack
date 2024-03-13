@@ -1,0 +1,46 @@
+version: '3.3'
+
+services:
+  smartglpi-backend:
+    image: registry.ufsj.edu.br:5999/smartglpi/smartglpi-backend:v1.0.0
+    volumes:
+      - $PWD/backend.env:/application/.env
+      - $PWD/ticket_details.json:/application/tmp/ticket_details.json
+    networks:
+      - smartglpi-net
+
+
+  smartglpi-web:
+    image: registry.ufsj.edu.br:5999/smartglpi/smartglpi-web:v1.0.0 
+    restart: always
+    environment:
+      MY_APP_API_SMARTGLPI_BACKEND: "https://api-smart-glpi.ufsj.edu.br"
+      MY_APP_SAC_NTINF_URL: "https://sac-ntinf.ufsj.edu.br"
+    networks:
+      - smartglpi-net
+
+
+  proxy-smartglpi:
+    image: registry.ufsj.edu.br:5999/smartglpi/proxy-smartglpi:v1.0.0 
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    environment:
+      PROXY_HOST_SMARTGLPI_BACKEND: "api-smart-glpi.ufsj.edu.br"
+      PROXY_CONTAINER_PORT_SMARTGLPI_BACKEND: "smartglpi-backend:5000"
+      PROXY_HOST_SMARTGLPI_WEB: "smart-glpi.ufsj.edu.br"
+      PROXY_CONTAINER_PORT_SMARTGLPI_WEB: "smartglpi-web:80"
+    networks:
+      - smartglpi-net
+    depends_on:
+      - smartglpi-backend
+      - smartglpi-web
+
+
+
+
+networks:
+  smartglpi-net:
+    driver: bridge
+
