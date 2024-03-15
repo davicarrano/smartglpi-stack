@@ -10,8 +10,8 @@ server {
 server {
     listen              443 ssl;
     server_name         ${PROXY_HOST_SMARTGLPI_BACKEND};
-    ssl_certificate     /usr/local/nginx/ssl/bundle.crt;
-    ssl_certificate_key /usr/local/nginx/ssl/ufsj.edu.br.key;
+    ssl_certificate     /usr/local/nginx/ssl/certificado.crt;
+    ssl_certificate_key /usr/local/nginx/ssl/certificado.key;
     ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers         HIGH:!aNULL:!MD5;
 
@@ -46,8 +46,8 @@ server {
 server {
     listen              443 ssl;
     server_name         ${PROXY_HOST_SMARTGLPI_WEB};
-    ssl_certificate     /usr/local/nginx/ssl/bundle.crt;
-    ssl_certificate_key /usr/local/nginx/ssl/ufsj.edu.br.key;
+    ssl_certificate     /usr/local/nginx/ssl/certificado.crt;
+    ssl_certificate_key /usr/local/nginx/ssl/certificado.key;
     ssl_protocols       SSLv3 TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers         HIGH:!aNULL:!MD5;
 

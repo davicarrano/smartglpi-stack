@@ -21,7 +21,7 @@ services:
 
 
   proxy-smartglpi:
-    image: registry.ufsj.edu.br:5999/smartglpi/proxy-smartglpi:v1.0.0 
+    image: registry.ufsj.edu.br:5999/smartglpi/proxy-smartglpi:v1.0.1
     ports:
       - "80:80"
       - "443:443"
@@ -31,6 +31,9 @@ services:
       PROXY_CONTAINER_PORT_SMARTGLPI_BACKEND: "smartglpi-backend:5000"
       PROXY_HOST_SMARTGLPI_WEB: "smart-glpi.ufsj.edu.br"
       PROXY_CONTAINER_PORT_SMARTGLPI_WEB: "smartglpi-web:80"
+    volumes:
+      - $PWD/certificado/bundle.crt:/usr/local/nginx/ssl/certificado.crt
+      - $PWD/certificado/ufsj.edu.br.key:/usr/local/nginx/ssl/certificado.key
     networks:
       - smartglpi-net
     depends_on:
